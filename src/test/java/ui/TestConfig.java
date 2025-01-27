@@ -1,3 +1,5 @@
+package ui;
+
 import com.codeborne.selenide.Configuration;
 
 public abstract class TestConfig {

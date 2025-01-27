@@ -3,7 +3,7 @@
 <suite name="Ui regression suite">
     <test name="Login" enabled="true">
         <classes>
-            <class name="ui.CookiePopupTest"/>
+            <class name="ui.LoginPageTests"/>
         </classes>
     </test>
 </suite>
