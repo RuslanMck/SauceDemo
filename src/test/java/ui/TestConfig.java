@@ -15,6 +15,7 @@ public abstract class TestConfig {
         ChromeOptions chromeOptions = new ChromeOptions();
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("profile.password_manager_enabled", false);
+        prefs.put("credentials_enable_service", false);
         prefs.put("profile.password_manager_leak_detection", false);
 
         chromeOptions.setExperimentalOption("prefs", prefs);

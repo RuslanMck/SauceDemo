@@ -1,0 +1,20 @@
+package helpers;
+
+public enum ProductGridSortingOptions {
+    NAME_A_TO_Z("Name (A to Z)"),
+    NAME_Z_TO_A("Name (Z to A)"),
+    PRICE_LOW_TO_HIGH("Price (low to high)"),
+    PRICE_HIGH_TO_LOW("Price (high to low)");
+
+    private final String optionText;
+
+    ProductGridSortingOptions(String optionText) {
+        this.optionText = optionText;
+    }
+
+    public String getText() {
+        return optionText;
+    }
+
+
+}

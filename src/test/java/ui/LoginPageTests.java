@@ -1,34 +1,27 @@
 package ui;
 
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
-import helpers.ExtractCredentials;
+import helpers.LoginHelper;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pages.LoginPage;
+import steps.InventoryPageSteps;
 import steps.LoginPageSteps;
 
-import java.util.ArrayList;
 
 public class LoginPageTests extends BasicTest {
 
     private final LoginPage LOGIN_PAGE = new LoginPage();
     private final LoginPageSteps LOGIN_PAGE_STEPS = new LoginPageSteps();
-    private ArrayList<String> namesList;
-    private ArrayList<String> passwordsList;
+    private LoginHelper loginHelper;
+    private final InventoryPageSteps INVENTORY_PAGE_STEPS = new InventoryPageSteps();
 
     @BeforeClass
     public void setUp() {
         super.baseSetUp(LOGIN_PAGE.getBASE_URL());
-
-        String userNames = LOGIN_PAGE.getTextFromUsernameList();
-        namesList = ExtractCredentials.extract(userNames);
-
-        String passwords = LOGIN_PAGE.getTextFromPasswordList();
-        passwordsList = ExtractCredentials.extract(passwords);
-
+        loginHelper = new LoginHelper();
     }
 
     @Test(description = "Verify if required UI elements are presented on the page")
@@ -45,9 +38,8 @@ public class LoginPageTests extends BasicTest {
     @Parameters({"validUsername", "validPassword", "invalidUsername", "invalidPassword"})
     public void verifyInputFieldsValidation() {
 
-
-        String validUsername = namesList.get(0);
-        String validPassword = passwordsList.get(0);
+        String validUsername = loginHelper.getNamesList().get(0);
+        String validPassword = loginHelper.getPasswordsList().get(0);
         String invalidUsername = "qwe";
         String invalidPassword = "asd1!";
 
@@ -89,9 +81,9 @@ public class LoginPageTests extends BasicTest {
             dependsOnMethods = {"verifyInputFieldsValidation"})
     public void verifyLoginProcess() {
 
-        for (String password : passwordsList) {
+        for (String password : loginHelper.getPasswordsList()) {
 
-            for (String username : namesList) {
+            for (String username : loginHelper.getNamesList()) {
 
                 LOGIN_PAGE_STEPS.clearUsernameInput();
                 LOGIN_PAGE_STEPS.enterUsername(username);
@@ -108,7 +100,7 @@ public class LoginPageTests extends BasicTest {
                     case "error_user":
                     case "visual_user":
                         Assert.assertEquals(WebDriverRunner.driver().url(), "https://www.saucedemo.com/inventory.html");
-                        Selenide.open(LOGIN_PAGE.getBASE_URL());
+                        INVENTORY_PAGE_STEPS.logoutFromUserAccount();
                         break;
                     case "locked_out_user":
                         Assert.assertTrue(LOGIN_PAGE_STEPS.verifyErrorMessageDisplaying());
@@ -119,4 +111,5 @@ public class LoginPageTests extends BasicTest {
             }
         }
     }
+
 }
