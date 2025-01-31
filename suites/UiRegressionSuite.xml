@@ -6,9 +6,14 @@
             <class name="ui.LoginPageTests"/>
         </classes>
     </test>
-    <test name="Inventory Page" enabled="true">
+    <test name="Inventory Page" enabled="false">
         <classes>
             <class name="ui.InventoryPageTest"/>
+        </classes>
+    </test>
+    <test name="Flow test" enabled="true">
+        <classes>
+            <class name="flow.LoginNavigationAddToCartCheckoutTest"/>
         </classes>
     </test>
 </suite>
